@@ -1,0 +1,60 @@
+<div class="main">
+  <h2 class="heading">Roman Number Caculator</h2>
+  <form #romanCalc="ngForm" name="form" novalidate (ngSubmit)="romanCalc.valid && caculate()">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-5">
+          <div class="text-input form-group"
+            [class.has-error]="romanCalc.submitted && numonectrl.invalid || numonectrl.touched && numonectrl.invalid">
+            <input type="text" autocomplete="off" class="form-control" [(ngModel)]="numone" name="numone"
+              placeholder="First Number" required #numonectrl="ngModel"
+              pattern="^M{0,3}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$" />
+            <div class="help-block"
+              *ngIf="romanCalc.submitted && numonectrl.invalid || numonectrl.touched && numonectrl.invalid">
+              <div *ngIf="numonectrl.errors?.pattern">Enter a valid Roman number</div>
+              <div *ngIf="numonectrl.errors?.required">Please enter a value</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="text-input form-group">
+            <select class="form-control" (change)="operatorchange()" [(ngModel)]="calcoperator" name="calcoperator">
+              <option value="+">+</option>
+              <option value="-">-</option>
+              <option value="*">x</option>
+              <option value="/">÷</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="text-input form-group"
+            [class.has-error]="romanCalc.submitted && numtwoctrl.invalid || numtwoctrl.touched && numtwoctrl.invalid">
+            <input type="text" autocomplete="off" class="form-control" [(ngModel)]="numtwo" name="numtwo"
+              placeholder="Second Number" required #numtwoctrl="ngModel"
+              pattern="^M{0,3}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$" />
+            <div class="help-block"
+              *ngIf="romanCalc.submitted && numtwoctrl.invalid || numtwoctrl.touched && numtwoctrl.invalid">
+              <div *ngIf="numtwoctrl.errors?.pattern">Enter a valid Roman number</div>
+              <div *ngIf="numtwoctrl.errors?.required">Please enter a value</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-9">
+          <div class="result" *ngIf="showResult"
+            [ngClass]="{'success': finalAnswer !== '', 'error': finalAnswer == ''}">
+            <div *ngIf="finalAnswer !== ''">The Answer is : {{finalAnswer}}</div>
+            <div *ngIf="reminderInt !== 0 && calcoperator == '/'">With a reminder {{reminderRoman}}</div>
+            <div *ngIf="finalAnswer == ''">{{errorMessage}}</div>
+          </div>
+        </div>
+        <div class="col-md-3 text-right">
+          <button type="submit" class="btn btn-info">Caculate</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
